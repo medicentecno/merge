@@ -3,6 +3,11 @@ const PORT = 3000;
 const fs = require('fs');
 const path = require('path');
 
+const materias = [{
+    id: "1", nombreMateria: "Taller de Programación 2"
+}
+];
+
 const servidor = http.createServer((req, res) => {
     // Manejar la solicitud GET a la ruta "/"
     if (req.method === 'GET' && req.url === '/') {
@@ -18,11 +23,16 @@ const servidor = http.createServer((req, res) => {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end(data);
         });
-    } else {
-        // Responder con un 404 para otras rutas
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Ruta no encontrada');
     }
+
+    if (req.method === 'GET' && req.url === '/traer/materias') {
+        // Devolver el arreglo en formato JSON
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(materias));
+    }
+
+
+
 });
 
 servidor.listen(PORT, () => {
